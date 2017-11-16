@@ -166,10 +166,18 @@ class BeaconPublisher(Thread):
             self._pubs[p] = sdw.MQTT(addr, int(port), p)
 
 
+    # publish status to a sensor, adding the receiver name as an attribute
+    def publish_status(self, key, status):
+        payload = self._pubs[key].create_status_payload(status, "")
+        payload['attributes'] = {}
+        payload['attributes']['receiver'] = self._name
+        return self._pubs[key].publish("status", payload)
+    
+
     # publish the status to all SA sensors
     # status is one of "RUNNING", "NOT_RUNNING", or "ERROR"
     def publish_status_all(self, status):
-        s = map(lambda k: self._pubs[k].publish_status(status), self._pubs.keys())
+        s = map(lambda k: self.publish_status(k, status), self._pubs.keys())
         logger.info("[%s] sensor paths: %s", str(datetime.now()), self._pubs.keys())
         logger.debug("[%s] status publication result: %s", str(datetime.now()), str(s))
 
