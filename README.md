@@ -1,5 +1,10 @@
 # Overview
 
+Before running, edit /home/bt/store-config.json and make sure the top level has:
+* name - the name of this receiver
+* interface - the network interface that the server can reach this receiver (eg: wlan0)
+* controller - the URL for the check-in (eg: http://192.168.0.4/ble/check-in)
+
 Run with: FLASK_APP=hello.py flask run --host=0.0.0.0
 
 send config data with: 
