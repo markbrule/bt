@@ -7,7 +7,8 @@ import sys
 import traceback
 import logging
 from datetime import datetime
-
+from urllib import urlopen
+import netifaces as ni
 
 '''
 
@@ -34,6 +35,28 @@ config_version = None
 scanner = None
 temp_scanner = None
 
+def init():
+    global config_stash
+    try:
+        with open(config_stash,"r") as fp:
+            cfg = json.load(fp)
+        if 'name' in cfg and 'interface' in cfg and 'controller' in cfg:
+            if cfg["interface"] in ni.interfaces():
+                ip = ni.ifaddresses(cfg["interface"])[ni.AF_INET][0]['addr']
+                info = {"name": cfg["name"], "controller": cfg["controller"], "address": ip, "interface": cfg["interface"]}
+                r = urlopen(cfg["controller"], data="json="+json.dumps(info))
+                logger.info("[%s] result from check-in: %s", str(datetime.now()), r.read())
+            else:
+                logger.warning("[%s] interface %s doesn't exist, can't check in", str(datetime.now()), cfg["interface"])
+        else:
+            logger.info("[%s] config doesn't have check-in items", str(datetime.now()))
+        
+    except Exception as e:
+        type, value, tb = sys.exc_info()[:3]
+        logger.warning("[%s] startup error encoutered: {%s}", str(datetime.now()), type)
+        logger.warning(e, exc_info=True)
+        logger.warning("[%s] startup error not-fatal, starting up", str(datetime.now()))
+    
 @app.route('/')
 def running_status():
     global scanner, temp_scanner, config_version
@@ -122,3 +145,5 @@ def handle_exception(e):
          "reason": str(type),
          "description": str(value)}
     return json.dumps(s)
+
+init()
