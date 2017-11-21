@@ -24,3 +24,8 @@ Namespaces are "69788673717376657884" - ASCII codes of ENVIGILANT
 Beacon passwords:
 Lotton: 000000
 Radius Networks: 0000-0000
+
+# BT-MQTT
+
+Contains listener to MQTT for BLE beacon data
+
