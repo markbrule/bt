@@ -5,7 +5,9 @@ Before running, edit /home/bt/store-config.json and make sure the top level has:
 * interface - the network interface that the server can reach this receiver (eg: wlan0)
 * controller - the URL for the check-in (eg: http://192.168.0.4/ble/check-in)
 
-Run with: FLASK_APP=hello.py flask run --host=0.0.0.0
+Invoke the script startup-flask.sh from /etc/rc.local
+
+Run manually with: FLASK_APP=hello.py flask run --host=0.0.0.0
 
 send config data with: 
 curl -X POST --data @config.json --header "Content-Type:application/json" http://localhost:5000/config
@@ -48,13 +50,7 @@ pip install pyyaml
 pip install netifaces
 pip install paho-mqtt
 
-if pyyaml doesn't install right, do the following:
-get the zipfile from http://pyyaml.org/download/pyyaml/PyYAM-3.12.tar.gz
-untar it
-cd to the PyYAML-3.12 directory
-python setup.py install
-
-SDW?
+install SDW
 
 # BT-MQTT
 
