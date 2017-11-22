@@ -23,7 +23,7 @@ status: curl -X GET http://localhost:5000
 '''
 
 app = Flask(__name__)
-logging.basicConfig(filename="flask.log", level=logging.DEBUG)
+logging.basicConfig(filename="/home/pi/bt/flask.log", level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 
