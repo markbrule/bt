@@ -32,6 +32,19 @@ def on_message(client, userdata, msg):
             if 'beacon' in v['attributes'] and 'receiver' in v['attributes']:
                 beacon = v['attributes']['beacon']
                 receiver = v['attributes']['receiver']
+
+                if beacon not in beacon_index:
+                    beacon_index = load_objects('bt_beacon', 'title', ['nid'])
+                    if beacon not in beacon_index:
+                        print "Beacon {0} not found, skipping".format(beacon)
+                        continue
+
+                if receiver not in receiver_index:
+                    receiver_index = load_objects('bt_receiver', 'title', ['nid'])
+                    if receiver not in receiver_index:
+                        print "Receiver {0} not found, skipping".format(receiver)
+                        continue
+                
                 update = {
                     "keys": {
                         'field_beacon': beacon_index[beacon]['nid'],
