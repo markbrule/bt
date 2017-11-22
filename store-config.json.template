@@ -1,0 +1,8 @@
+{
+    "version": "1.2",
+    "name": "XXX",
+    "controller": "http://192.168.0.4/ble/check-in",
+    "interface": "wlan0",
+    "beacons": {},
+    "temperature": {}
+}
