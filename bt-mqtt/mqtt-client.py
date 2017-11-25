@@ -48,7 +48,8 @@ def on_message(client, userdata, msg):
                 update = {
                     "keys": {
                         'field_beacon': beacon_index[beacon]['nid'],
-                        'field_receiver': receiver_index[receiver]['nid']
+                        'field_receiver': receiver_index[receiver]['nid'],
+                        'field_detection_mode': 'live'
                         },
                     "values": {
                         'title': "{0} @ {1}".format(beacon,receiver),
